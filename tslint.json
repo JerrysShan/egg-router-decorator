@@ -1,0 +1,9 @@
+{
+  "extends": [
+    "tslint-config-egg"
+  ],
+  "rules": {
+    "array-bracket-spacing": false,
+    "eofline": false
+  }
+}
