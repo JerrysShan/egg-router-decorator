@@ -7,7 +7,7 @@
 ```ts
 // home.ts
 import { Controller } from 'egg';
-import { GET } from 'egg-router-decorator';
+import { GET } from 'egg-router-decorator2';
 
 class HomeController extends Controller {
   @GET('/')
@@ -19,17 +19,10 @@ class HomeController extends Controller {
 export default HomeController;
 
 // router.ts
-import { routers } from 'egg-router-decorator';
+import { initRouter } from 'egg-router-decorator2';
 
 export default (app) => {
-  const { router, controller, middleware } = app;
-  for (const item of routers) {
-    const middlewares = item.middlewares.map(ele => middleware[ele]());
-    router[item.method](
-      item.path,
-      ...middlewares,
-      controller[item.controller][item.handler]);
-  }
+  initRouter(app, { prefix: '/api' });
 };
 
 ```
@@ -53,4 +46,4 @@ export default (app) => {
   middlewares: \<Array[string]\> , names of eggjs middlewares
 
 
-* routers \<Array\> , store router of decorator declare
+* initRouter(app: Application,options={prefix:''}) 

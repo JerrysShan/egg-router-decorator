@@ -12,7 +12,7 @@ export enum METHOD {
   PATCH = 'patch',
 }
 
-export interface Router {
+export interface RouterOption {
   method: string;
   path: string;
   controller: string;
@@ -20,7 +20,7 @@ export interface Router {
   middlewares: string[];
 }
 
-const routers: Router[] = [];
+const routers: RouterOption[] = [];
 
 export function initRouter(app: Application, options = { prefix: '' }) {
   const { router, controller, middleware } = app;
