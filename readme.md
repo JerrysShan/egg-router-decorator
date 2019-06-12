@@ -1,4 +1,4 @@
-# egg-router-decorator
+# egg-router-decorator2
 
 ## Introduction
   use decorator declare making eggjs router easy.
