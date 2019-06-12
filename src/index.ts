@@ -1,4 +1,5 @@
 import * as assert from 'assert';
+import { Application } from 'egg';
 import { trimController } from './utils';
 
 export enum METHOD {
@@ -19,7 +20,16 @@ export interface Router {
   middlewares: string[];
 }
 
-export const routers: Router[] = [];
+const routers: Router[] = [];
+
+export function initRouter(app: Application, options = { prefix: '' }) {
+  const { router, controller, middleware } = app;
+  for (const item of routers) {
+    const middlewares = item.middlewares.map(ele => middleware[ele]());
+    const path = options.prefix ? options.prefix + item.path : item.path;
+    router[item.method](path, ...middlewares, controller[item.controller][item.handler]);
+  }
+}
 
 export function GET(path: string, ...middlewares: string[]): any {
   return Request(METHOD.GET, path, ...middlewares);
