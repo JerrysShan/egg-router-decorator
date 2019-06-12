@@ -1,5 +1,5 @@
 {
-  "name": "egg-router-decorator",
+  "name": "egg-router-decorator2",
   "version": "0.0.1",
   "description": "egg.js router decorator",
   "main": "./dist/index.js",
