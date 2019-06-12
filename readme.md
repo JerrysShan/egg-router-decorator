@@ -53,4 +53,4 @@ export default (app) => {
   middlewares: \<Array[string]\> , names of eggjs middlewares
 
 
-* routers \<Array\> ,
+* routers \<Array\> , store router of decorator declare

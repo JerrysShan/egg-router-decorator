@@ -11,5 +11,7 @@ describe('utils.trimController', function () {
     assert(str3 === 'home');
     const str4 = utils.trimController('HomeIndex');
     assert(str4 === 'homeIndex');
+    const str5 = utils.trimController('homeIndex');
+    assert(str5 === 'homeIndex');
   });
 });

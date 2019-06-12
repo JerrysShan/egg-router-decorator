@@ -1,3 +1,4 @@
+import * as assert from 'assert';
 import { trimController } from './utils';
 
 export enum METHOD {
@@ -53,6 +54,8 @@ export function OPTIONS(path: string, ...middlewares: string[]): any {
 }
 
 export function Request(method: METHOD, path: string, ...middlewares: string[]): any {
+  assert(method);
+  assert(path);
   return (target, propertyKey: string) => {
     routers.push({ method, path, controller: trimController(target.constructor.name), handler: propertyKey, middlewares });
   };
