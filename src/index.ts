@@ -1,6 +1,6 @@
 import * as assert from 'assert';
 import { Application } from 'egg';
-import { trimController } from './utils';
+import { trimController, trimControllerAndLower } from './utils';
 
 export enum METHOD {
   GET = 'get',
@@ -31,42 +31,47 @@ export function initRouter(app: Application, options = { prefix: '' }) {
   }
 }
 
-export function GET(path: string, ...middlewares: string[]): any {
+export function GET(path: string = '', ...middlewares: string[]): any {
   return Request(METHOD.GET, path, ...middlewares);
 }
 
-export function POST(path: string, ...middlewares: string[]): any {
+export function POST(path: string = '', ...middlewares: string[]): any {
   return Request(METHOD.POST, path, ...middlewares);
 }
 
-export function PUT(path: string, ...middlewares: string[]): any {
+export function PUT(path: string = '', ...middlewares: string[]): any {
   return Request(METHOD.PUT, path, ...middlewares);
 }
 
-export function DELETE(path: string, ...middlewares: string[]): any {
+export function DELETE(path: string = '', ...middlewares: string[]): any {
   return Request(METHOD.DELETE, path, ...middlewares);
 }
 
-export function DEL(path: string, ...middlewares: string[]): any {
+export function DEL(path: string = '', ...middlewares: string[]): any {
   return Request(METHOD.DELETE, path, ...middlewares);
 }
 
-export function HEAD(path: string, ...middlewares: string[]): any {
+export function HEAD(path: string = '', ...middlewares: string[]): any {
   return Request(METHOD.HEAD, path, ...middlewares);
 }
 
-export function PATCH(path: string, ...middlewares: string[]): any {
+export function PATCH(path: string = '', ...middlewares: string[]): any {
   return Request(METHOD.PATCH, path, ...middlewares);
 }
 
-export function OPTIONS(path: string, ...middlewares: string[]): any {
+export function OPTIONS(path: string = '', ...middlewares: string[]): any {
   return Request(METHOD.OPTIONS, path, ...middlewares);
 }
 
 export function Request(method: METHOD, path: string, ...middlewares: string[]): any {
   assert(method);
-  assert(path);
   return (target, propertyKey: string) => {
+    if (!path || !path.startsWith('/')) {
+      if (path) {
+        middlewares.unshift(path);
+      }
+      path = `/${trimControllerAndLower(target.constructor.name)}/${propertyKey.toLowerCase()}`;
+    }
     routers.push({ method, path, controller: trimController(target.constructor.name), handler: propertyKey, middlewares });
   };
 }
